@@ -4,14 +4,23 @@ from scipy import signal
 from scipy import linalg
 from scipy.signal import lfilter
 import matplotlib.pyplot as plt
+import argparse
 
 
 
+parser = argparse.ArgumentParser(description = 'Optimize inputs so that the drone in the simulation matches a real flight')
+parser.add_argument('--path', dest = 'fpath')
+args = parser.parse_args()
+filepath = args.fpath
 
-def load_filter_bf_datafile(path, signal_order, signal_crit_freq, signal_sampling_freq, signal_output):
+if not filepath:
+  filepath = "drone_test_1_BB.csv"
+
+
+def load_filter_bf_datafile(signal_order, signal_crit_freq, signal_sampling_freq, signal_output):
 
     # rcCommand 0 is roll, 1 is pitch, 2 is yaw
-    blackbox_df = pd.read_csv(path, skiprows = 141, 
+    blackbox_df = pd.read_csv(filepath, skiprows = 141, 
                             usecols = ['rcCommand[0]', 'rcCommand[1]', 'rcCommand[2]', 'gyroADC[0]', 'gyroADC[1]', 'gyroADC[2]'])
     
 
@@ -49,7 +58,7 @@ def fit_impulse(x, y):
 
 
 
-x, y = load_filter_bf_datafile('drone_test_1_BB.csv', 7, 100, 500, 'sos')
+x, y = load_filter_bf_datafile(7, 100, 500, 'sos')
 
 
 # set both to 0 in order to not cut anything from graph

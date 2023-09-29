@@ -6,11 +6,27 @@ import time
 import matplotlib.pyplot as plt
 import scipy
 import pandas as pd
+import argparse
+from pathlib import Path
+
+
+parser = argparse.ArgumentParser(description = 'Optimize inputs so that the drone in the simulation matches a real flight')
+parser.add_argument('--path', dest = 'fpath')
+args = parser.parse_args()
+filepath = args.fpath
+
+if not filepath:
+  filepath = "drone_test_1_BB.csv"
+
+
+
+
+
 
 counter = 0
 test_counter = 0
 
-blackbox_df = pd.read_csv('drone_test_1_BB.csv', skiprows = 141, 
+blackbox_df = pd.read_csv(filepath, skiprows = 141, 
                           usecols = ['loopIteration', 'time', 'rcCommand[0]', 'rcCommand[1]', 'rcCommand[2]', 'rcCommand[3]', 'gyroADC[0]', 'gyroADC[1]', 'gyroADC[2]'])
 
 
