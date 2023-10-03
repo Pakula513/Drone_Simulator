@@ -1,0 +1,115 @@
+<mujoco model="Hoopflyt">
+  <option timestep="0.002" gravity="0 0 -9.81" density="0.5" viscosity="0.00002"/>
+
+  <size njmax="50" nconmax="10" nstack="2000"/>
+
+  <visual>
+    <global offwidth="1280" offheight="720"/>
+    <rgba haze=".3 .3 .3 1"/>
+  </visual>
+
+  <default>
+
+  </default>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.6 0.6 0.6" rgb2="0 0 0" width="512" height="512"/>
+
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".25 .25 .25" rgb2=".3 .3 .3" width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+
+    <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true"/>
+
+    <mesh file="drone.stl" scale="0.037057830597539 0.037057830597539 0.037057830597539"/>
+  </asset>
+
+  <worldbody>
+   <!-- <geom name="floor" pos="0 0 -3.0" size="0 0 0.25" type="plane" material="matplane"/> -->
+
+    <light mode = "fixed" castshadow="false" directional="false" diffuse="1 1 1" specular=".2 .2 .2" pos="0 0 5" dir="0 0 -1"/>
+
+    <body name="drone" pos="0 0 0">
+      <joint type = "ball" pos = "0 0 0"/>
+      <geom name="drone" type="mesh" mesh="drone" mass="0.5"/>
+
+      <body pos="0.00031647387330298305 0.08523301037433968 0.021350498520466117" axisangle="1 0 0 90">
+          <camera name="drone" mode="fixed" fovy="130" axisangle="1 0 0 45"/>
+      </body>
+      <site name="drone_fl" type="sphere" size="0.02" pos="0.12818785355486506 0.08212237607398228 0.037057830597539" rgba="1 0 0 0.5"/>
+      <site name="drone_fr" type="sphere" size="0.02" pos="-0.12818785355486506 0.08212237607398228 0.037057830597539" rgba="1 0 0 0.5"/>
+      <site name="drone_br" type="sphere" size="0.02" pos="-0.12818785355486506 -0.11824449644893341 0.037057830597539" rgba="1 0 0 0.5"/>
+      <site name="drone_bl" type="sphere" size="0.02" pos="0.12818785355486506 -0.11824449644893341 0.037057830597539" rgba="1 0 0 0.5"/>
+      <site name="drone_sensors" type="sphere" size="0.02" rgba="1 0 0 0.5" pos="0 0 0.037057830597539"/>
+    </body>
+
+    <body name="target" pos="0 10 0" axisangle="1 0 0 90" mocap="true">
+      <geom name="target" type="sphere" size="0.1" rgba="1 0 1 0.5" contype="0" conaffinity="0" group="1"/>
+    </body>
+
+    <body name="estimatedpos" pos="0 10 0" axisangle="1 0 0 90" mocap="true">
+      <geom name="estimatedpos" type="sphere" size="0.1" rgba="0 1 1 0.25" contype="0" conaffinity="0" group="1"/>
+    </body>
+
+    <body name="hooppos" pos="0 10 0" mocap="true">
+      <geom name="hooppos" type="sphere" size="0.1" rgba="1 1 1 0.5" contype="0" conaffinity="0" group="1"/>
+    </body>
+
+<!--     <body name="hoopmocap" pos="0 0 0" mocap="true">
+      <geom name="hoopmocapcenter" type="sphere" size="0.1" rgba="1 0 1 0.5" contype="0" conaffinity="0"/>
+    </body>
+ -->
+    <body name="hoop" pos="0 10 0" axisangle="1 0 0 90" mocap="true">
+<!--       <freejoint/>
+ -->        <geom type="capsule" pos="0.5 0.0 0" axisangle="0.5 0.0 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.4842487040728958 0.12451181712480552 0" axisangle="0.4842487040728958 0.12451181712480552 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.43798722958511593 0.24117874433779388 0" axisangle="0.43798722958511593 0.24117874433779388 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.3641302892353853 0.3426501604572142 0" axisangle="0.3641302892353853 0.3426501604572142 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.26733125311858025 0.4225328402693092 0" axisangle="0.26733125311858025 0.4225328402693092 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.15368896228803766 0.4757937608573973 0" axisangle="0.15368896228803766 0.4757937608573973 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.030363470154581424 0.4990772081353464 0" axisangle="0.030363470154581424 0.4990772081353464 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.09487507799398935 0.4909162042300442 0" axisangle="-0.09487507799398935 0.4909162042300442 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.21413600442419836 0.45182493469178936 0" axisangle="-0.21413600442419836 0.45182493469178936 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.31990525255707447 0.3842663521392348 0" axisangle="-0.31990525255707447 0.3842663521392348 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.40551881148330454 0.29249699747718455 0" axisangle="-0.40551881148330454 0.29249699747718455 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.46558258319481005 0.18229881575492413 0" axisangle="-0.46558258319481005 0.18229881575492413 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.49631223872068736 0.06061486365619764 0" axisangle="-0.49631223872068736 0.06061486365619764 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.4957716504692321 -0.0648881390626482 0" axisangle="-0.4957716504692321 -0.0648881390626482 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.46399487830253777 -0.1863028526593546 0" axisangle="-0.46399487830253777 -0.1863028526593546 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.40298402358862756 -0.29597952079885603 0" axisangle="-0.40298402358862756 -0.29597952079885603 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.3165830864369588 -0.38700794485649653 0" axisangle="-0.3165830864369588 -0.38700794485649653 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.21023577376535182 -0.4536528622518366 0" axisangle="-0.21023577376535182 -0.4536528622518366 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="-0.09064251754557764 -0.49171529772115047 0" axisangle="-0.09064251754557764 -0.49171529772115047 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.03466168714394906 -0.49879712052530434 0" axisangle="0.03466168714394906 -0.49879712052530434 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.15778202586732756 -0.47445213911753203 0" axisangle="0.15778202586732756 -0.47445213911753203 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.2709612790650486 -0.42021421352380844 0" axisangle="0.2709612790650486 -0.42021421352380844 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.3670685670974089 -0.3395006142101292 0" axisangle="0.3670685670974089 -0.3395006142101292 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.4400486326262119 -0.23739671632902 0" axisangle="0.4400486326262119 -0.23739671632902 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+        <geom type="capsule" pos="0.4853033532157623 -0.12033559472382672 0" axisangle="0.4853033532157623 -0.12033559472382672 0 90" size="0.0254 0.062918" rgba=".8 .2 .1 1"/>
+    </body>
+
+    <!--<body name="ruler">
+      <geom type="capsule" pos="0 -3 -5.0"  axisangle="1 0 0 90" size="0.05 0.1" contype="0" conaffinity="0" rgba="1 0 1 0.5"/>
+    </body>-->
+
+  </worldbody>
+
+<!--   <equality>
+    <weld body1="hoopmocap" body2="hoop"/>
+  </equality> -->
+
+  <sensor>
+    <accelerometer name="drone_acc" site="drone_sensors"/>
+    <gyro name="drone_gyro" site="drone_sensors"/>
+    <framelinacc name="drone_linacc" objtype="site" objname="drone_sensors"/>
+    <framelinvel name="drone_linvel" objtype="site" objname="drone_sensors"/>
+    <framepos    name="drone_pos" objtype="site" objname="drone_sensors"/>
+    <framequat   name="drone_quat"  objtype="site" objname="drone_sensors"/>
+  </sensor>
+
+  <actuator>
+    <motor name="drone_fl" site="drone_fl" gear="0 0 25 0 0  1" ctrllimited="true" ctrlrange="0 1"/>
+    <motor name="drone_fr" site="drone_fr" gear="0 0 25 0 0 -1" ctrllimited="true" ctrlrange="0 1"/>
+    <motor name="drone_br" site="drone_br" gear="0 0 25 0 0  1" ctrllimited="true" ctrlrange="0 1"/>
+    <motor name="drone_bl" site="drone_bl" gear="0 0 25 0 0 -1" ctrllimited="true" ctrlrange="0 1"/>
+  </actuator>
+</mujoco>
+
