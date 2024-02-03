@@ -99,6 +99,7 @@
   <sensor>
     <accelerometer name="drone_acc" site="drone_sensors"/>
     <gyro name="drone_gyro" site="drone_sensors"/>
+    <force name="drone_force" site="drone_sensors"/>
     <framelinacc name="drone_linacc" objtype="site" objname="drone_sensors"/>
     <framelinvel name="drone_linvel" objtype="site" objname="drone_sensors"/>
     <framepos    name="drone_pos" objtype="site" objname="drone_sensors"/>

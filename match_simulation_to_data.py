@@ -188,7 +188,6 @@ if __name__ == '__main__':
 
   optimal_results = bodyrates_error(xstar, results=True, view=False)
 
-
   
   print("plotting...")
 
