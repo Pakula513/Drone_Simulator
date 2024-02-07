@@ -53,7 +53,7 @@ def load_filter_bf_datafile(signal_order, signal_crit_freq, signal_sampling_freq
 
 
     filtered_gyroArray = np.hstack((filtered, filtered2, filtered3))
-    
+
     accel_0 = np.array(blackbox_df.loc[:, 'accSmooth[0]'].to_numpy(), ndmin=2).T / 2048
     accel_1 = np.array(blackbox_df.loc[:, 'accSmooth[1]'].to_numpy(), ndmin=2).T / 2048
     accel_2 = np.array(blackbox_df.loc[:, 'accSmooth[2]'].to_numpy(), ndmin=2).T / 2048
@@ -76,7 +76,9 @@ def load_filter_bf_datafile(signal_order, signal_crit_freq, signal_sampling_freq
 
 stickArray, gyroArray, accelArray, motorArray, timeArray = load_filter_bf_datafile(7, 100, 500, 'sos')
 
+
 timeArray = timeArray / 1000000 #microseconds
+
 
 
 
@@ -136,7 +138,9 @@ def create_accelArray_rotated(gyro_list, accel_Array):
 gyro_list_1 = np.hstack((timeArray, gyroArray)).tolist() # Load from data, first column time, 2,3,4th w_x, w_y, w_z
 accel_i_array = create_accelArray_rotated(gyro_list_1, accelArray)
 
+
 accel_i_array = accel_i_array * 9.81 #converting from G's to m/s
+
 
 
 
@@ -234,7 +238,9 @@ accel_i_array_2 = create_accelArray_rotated(gyro_list_2, accel_2_array)
 
 plt.figure(1)
 plt.plot(np.arange(force_2_array[:,0].size), force_2_array[:,0])
+
 plt.plot(np.arange(accel_i_array[:,0].size), accel_i_array[:,0])
+
 plt.show()
 exit()
 
@@ -263,4 +269,6 @@ plt.plot(np.arange(accel_i_array[:,1].size), accel_i_array_2[:,1])
 plt.plot(np.arange(accel_i_array[:,2].size), accel_i_array_2[:,2])
 plt.show()
  
+
 #TODO: Optimize forces to match real acceleration
+
